@@ -115,7 +115,10 @@ with torch.no_grad():
         images_d = images.to(device)
         outputs = net(images_d)
         preds = outputs.argmax(1).cpu()
-        print(preds)
+        correct += (preds == labels).sum().item()
+        total += labels.size(0)
+        print(f"epoch  | test accuracy1: {100*correct/total:.2f}%")
+        
 
         # find the indices in this batch where prediction != truth
         mismatch = (preds != labels).nonzero(as_tuple=True)[0]
