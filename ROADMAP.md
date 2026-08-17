@@ -1,87 +1,62 @@
-# ROADMAP — Perception Engineer in 6 Months
+# ROADMAP — Perception Engineer (restructured, harder plan)
 
-**Budget:** 10–15 hrs/week · **Focus:** general camera CV · **Job applications start:** ~Week 12
+**Budget:** 10–15 hrs/week · **Werkstudent applications:** start after deep Phase 2
+**Timeline:** realistically 9–15 months for the full arc (apply early, keep leveling)
 
-Check items off as you go. Each phase has a *why* so you never lose the thread.
-
----
-
-## Phase 0 — Foundations (Weeks 1–3)
-*Why: everything in perception is arrays and geometry. Build that intuition in your hands first.*
-
-### Week 1 — Images are numbers
-- [ ] Install Node.js, Python, VS Code, git
-- [ ] Set up virtual env + install `numpy`, `opencv-python`, `matplotlib`
-- [ ] Create + push the `perception-journey` GitHub repo
-- [ ] Learn NumPy: arrays, slicing, broadcasting, `.shape`
-- [ ] **Deliverable:** notebook that loads, inspects, and manipulates image pixels
-- [ ] Understand: every image/model/paper operates on an ndarray
-
-### Week 2 — Matrices move the world
-- [ ] Watch 3Blue1Brown *Essence of Linear Algebra* (~2.5h across the week)
-- [ ] Apply it: rotate/translate/scale an image with `cv2.warpAffine`
-- [ ] **Deliverable:** transform script + short note on what the matrix does
-- [ ] Understand: a matrix is a transformation of space
-
-### Week 3 — Your first perception output
-- [ ] Learn color spaces (why HSV beats RGB for detection)
-- [ ] Learn convolution / filtering (blur, Sobel edges)
-- [ ] **Mini-project:** color-based object tracker on your webcam
-- [ ] **Deliverable:** tracker + README explaining the pipeline
-- [ ] Understand: convolution is the operation that makes CNNs click later
+Principle: **one hard thing at a time, done properly.** Perception deep first, THEN a
+full C++/ROS2 dive, THEN a heavyweight OSS capstone. Depth comes from doing +
+evaluating, not from more explanation. Reduced hand-holding from Phase 2 on.
 
 ---
 
-## Phase 1 — Classical CV & Camera Geometry (Weeks 4–9)
-*Why: understand how the world becomes pixels before you throw a neural net at it.*
+## Phase 0 — Foundations ✅ COMPLETE
+Arrays, pixel manipulation, uint8 wrap-around, affine transforms + composition order,
+real-time HSV color tracker with mask cleanup. Reviewed.
 
-- [ ] Image formation + the pinhole camera model
-- [ ] Camera calibration (intrinsics, distortion) with a checkerboard
-- [ ] Feature detection & matching (ORB/SIFT-style)
-- [ ] Homography & perspective transforms
-- [ ] **Project:** camera calibration + augmented-reality marker overlay
-- [ ] **Deliverable:** repo + README + demo GIF
+## Phase 1 — Classical CV & Camera Geometry ✅ COMPLETE
+- [x] Pinhole camera model (3D->2D, why depth is destroyed)
+- [x] Homogeneous coordinates + the matrix-division trick
+- [x] Full projection pipeline `pixel = K · [R|t] · point`
+- [x] Real camera calibration — **0.36px reprojection error**, saved camera_params.npz
+- [x] Undistortion from measured coefficients
+- [x] AprilTag detection + PnP pose (learned planar pose ambiguity)
+- [x] ORB feature detection & matching — AND its limits (texture, not meaning)
+- [ ] Commit all Phase 1 code + READMEs, tick off in repo
 
----
-
-## Phase 2 — Deep Learning for Vision (Weeks 10–16)
-*Why: learned features beat hand-crafted ones — this is modern perception.*
-
-- [ ] PyTorch fundamentals (tensors, autograd, training loop)
-- [ ] CNNs: what convolution layers learn
-- [ ] Object detection (fine-tune a pretrained detector, e.g. YOLO-family)
+## Phase 2 — DEEP Learning for Vision (IN PROGRESS — primary focus)
+*Not a taste. Train, evaluate, debug, understand. Reduced hand-holding.*
+- [x] The learning loop: weights, loss, gradient, gradient descent (hand-written y=2x)
+- [ ] PyTorch + tensors + autograd (why automatic gradients matter)
+- [ ] Build + train a small neural net from scratch
+- [ ] CNNs: why convolution fits images; learned kernels vs hand-set kernels
+- [ ] Object detection (YOLO-family): what's WHERE, with boxes
 - [ ] Semantic segmentation basics
-- [ ] **Project:** fine-tune a detector on your own small custom dataset
-- [ ] **Deliverable:** repo + README + evaluation notes
-- [ ] ⭐ **Week 12: start applying to Werkstudent roles** (polish CV + GitHub first)
+- [ ] **DEPTH TAX — solo project:** fine-tune a detector on my OWN dataset;
+      report precision/recall, find + explain failure cases. Portfolio-grade.
+- [ ] Outstanding: build the "Visual Servoing Tracker" assignment SOLO
+- [ ] ⭐ **Start Werkstudent applications** (polish CV + GitHub first)
 
----
+## Phase 3 — C++ & ROS2 Hard Dive + Remaining Perception (post-Phase-2)
+*Full weight now. Industry-facing systems layer.*
+- [ ] Sort the Linux path (VM / dual-boot) for ROS2
+- [ ] C++ fundamentals via re-implementing things I already know (transform, filter)
+- [ ] ROS2 proper: nodes, topics, services; publish perception results
+- [ ] 3D perception: point clouds, LiDAR data (public datasets — KITTI/nuScenes)
+- [ ] Tracking + state estimation: Kalman / EKF, multi-object tracking
+- [ ] A perception node running live inside ROS2
 
-## Phase 3 — Video & Tracking (Weeks 17–21)
-*Why: the world is 3D and moves; single frames aren't enough.*
-
-- [ ] Motion & optical flow
-- [ ] Multi-object tracking (association across frames)
-- [ ] Intro to Kalman filtering (predict + correct)
-- [ ] **Project:** real-time multi-object tracker
-- [ ] **Deliverable:** repo + README + demo video
-
----
-
-## Phase 4 — Integration & Polish (Weeks 22–24)
-*Why: perception doesn't live alone — it feeds a robot system.*
-
-- [ ] Sort out the Linux path (VM / dual-boot) for ROS2
-- [ ] ROS2 taste: nodes, topics, publish a perception result
-- [ ] **Capstone:** chain perception into a small simulated robot pipeline
-- [ ] Portfolio cleanup: pin best repos, write clear READMEs
-- [ ] Interview prep: be able to explain every project's *why/how*
-- [ ] Continue + iterate on job applications
+## Phase 4 — Heavyweight Open-Source Capstone
+*Genuinely useful first; paper only if a novel angle emerges (+ TU Dortmund advisor).*
+- [ ] Scope a substantial, genuinely-useful perception project
+- [ ] Build it well: clean C++/Python, ROS2 integration, real evaluation
+- [ ] Strong docs, reproducibility, open-source hygiene
+- [ ] IF a novel contribution appears -> pursue publication with an advisor
 
 ---
 
 ## Running principles
-- Never learn math in isolation — only to unlock a same-day result.
-- Type early code yourself; understand before automating.
-- Every project ends on GitHub with a README.
-- Applications are a *trajectory*, not a finish line — start early, keep going.
+- Fast comprehension != competence. Consolidate via SOLO reps.
+- Reduced hand-holding: I get the spec, I write the code, I debug, mentor reviews + deepens.
+- Every phase: a solo project + a hard evaluation (metrics + failure analysis).
+- Apply for Werkstudent EARLY; keep leveling toward production while employed.
+- Never learn math in isolation; every project ends on GitHub with an honest README.
